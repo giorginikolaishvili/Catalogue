@@ -1,0 +1,16 @@
+<div class="row center-block">
+  <div class="col-md-12">
+    <h4 class="text-primary text-center">Favorites</h4>
+  </div>
+</div>
+<div class="row center-block" style="width: 50%" *ngFor="let favorite of Favorites">
+  <hr>
+  <div class="col-xs-12"  style="background-color: aquamarine">
+    <div class="pull-left">
+      <h4 class="list-group-item-heading" style="margin-left: 20px">{{favorite.bookname}}</h4>
+      <p class="list-group-item-text">{{favorite.bookauthor}}</p>
+      <p class="list-group-item-text">{{favorite.bookyear}}</p>
+    </div>
+    <button class="btn btn-success pull-right" (click)="onRemove(favorite)" style="height:auto">Remove from Favorites</button>
+  </div>
+</div>

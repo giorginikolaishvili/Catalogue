@@ -1,0 +1,10 @@
+<div class="row center-block">
+  <div class="col-xs-12">
+    <h4 class="text-primary marg">Log In</h4>
+    <p class="marg">Username</p>
+    <input type="text" class="input-group" [disabled]="this.login" id="username" [(ngModel)]="userName" style="background-color: burlywood">
+    <p class="marg">Password</p>
+    <input type="password" class="input-group" [disabled]="this.login" id="password" [(ngModel)]="password" style="background-color: burlywood">
+      <button class="btn btn-primary " id="log" [disabled]="this.login" (click)="userloggingin()">Log In</button>
+  </div>
+</div>
