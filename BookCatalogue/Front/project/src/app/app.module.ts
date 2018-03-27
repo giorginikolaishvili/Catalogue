@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import {HeaderComponent} from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { BooksComponent } from './books/books.component';
 import { FavoritesComponent } from './favorites/favorites.component';
@@ -19,7 +18,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     LoginComponent,
     BooksComponent,
     FavoritesComponent

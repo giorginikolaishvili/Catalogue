@@ -34,7 +34,7 @@ export class BooksComponent implements OnInit {
 
   addFavorites(book: Book) {
     var jsonstr = {'bookid': book.bookId, 'bookname': book.bookName, 'bookauthor': book.bookAuthor, 'bookyear': book.bookYear};
-      this.http.post('http://localhost:8080/api/addtoFavorites', jsonstr).subscribe(
+      this.http.post('http://localhost:8080/api/addtoFav', jsonstr).subscribe(
         (data) => {
         },
         error => {

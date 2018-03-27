@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Http} from '@angular/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +24,7 @@ export class LoginComponent implements OnInit {
     var jsonstr = {'userName': this.userName, 'password': this.password};
     this.http.post('http://localhost:8080/api/postUser', jsonstr).subscribe(
       (data) => {
-        var json = data.json();
-        this.res = json.result;
-        console.log(this.res);
-        if (!(this.res === 'Invalid Username or Password')) {
+        if ((data != null)) {
           this.router.navigate(['/loggedIn']);
         }
         window.alert(this.res);

@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Injectable, OnInit, Output} from '@angular/core';
-import {Favorite} from '../models/favorite.model';
 import {Http} from '@angular/http';
 import {Book} from '../models/book.model';
 
@@ -10,14 +9,14 @@ import {Book} from '../models/book.model';
 })
 @Injectable()
 export class FavoritesComponent implements OnInit {
-  Favorites: Favorite [] = [];
+  Favorites: Book [] = [];
 
   constructor(private http: Http) {
     this.http.get('http://localhost:8080/api/getFav').subscribe(
       (data) => {
         var json = data.json();
         for (let j of json) {
-          this.Favorites.push(new Favorite(j.bookid, j.bookname, j.bookauthor, j.bookyear));
+          this.Favorites.push(new Book(j.bookid, j.bookname, j.bookauthor, j.bookyear));
         }
       },
       error => {
@@ -29,7 +28,7 @@ export class FavoritesComponent implements OnInit {
   ngOnInit() {
   }
 
-  onRemove(favorite: Favorite) {
+  onRemove(favorite: Book) {
     this.http.post('http://localhost:8080/api/removeFav', favorite).subscribe(
       data => {
         for (let f = 0; f < this.Favorites.length; f++)
