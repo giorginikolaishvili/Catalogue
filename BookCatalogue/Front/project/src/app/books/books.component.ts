@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Book} from '../models/book.model';
-import {HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
@@ -15,13 +15,10 @@ export class BooksComponent implements OnInit {
 
   headers = new HttpHeaders({'Content-type': 'application/json; charset=utf-8'});
 
-  constructor(private http: Http) {
-    this.http.get('http://localhost:8080/api/getBook').subscribe(
+  constructor(private http: HttpClient) {
+    this.http.get<any>('http://localhost:8080/api/getBook', {headers: this.headers}).subscribe(
       (data) => {
-        var json = data.json();
-        for (let j of json) {
-          this.Books.push(new Book(j.bookid, j.bookname, j.bookauthor, j.bookyear));
-        }
+        this.Books = data;
       },
       error => {
         console.error(error);
@@ -33,14 +30,14 @@ export class BooksComponent implements OnInit {
   }
 
   addFavorites(book: Book) {
-    var jsonstr = {'bookid': book.bookId, 'bookname': book.bookName, 'bookauthor': book.bookAuthor, 'bookyear': book.bookYear};
-      this.http.post('http://localhost:8080/api/addtoFav', jsonstr).subscribe(
-        (data) => {
-        },
-        error => {
-          console.error(error);
-        }
-      );
+    var jsonstr = {'bookid': book.bookid, 'bookname': book.name, 'bookauthor': book.author, 'bookyear': book.year};
+    this.http.post('http://localhost:8080/api/addtoFav', jsonstr).subscribe(
+      (data) => {
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
 }

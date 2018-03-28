@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Injectable, OnInit, Output} from '@angular/core';
-import {Http} from '@angular/http';
 import {Book} from '../models/book.model';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-favorites',
@@ -10,14 +10,12 @@ import {Book} from '../models/book.model';
 @Injectable()
 export class FavoritesComponent implements OnInit {
   Favorites: Book [] = [];
+  headers = new HttpHeaders({'Content-type': 'application/json; charset=utf-8'});
 
-  constructor(private http: Http) {
-    this.http.get('http://localhost:8080/api/getFav').subscribe(
+  constructor(private http: HttpClient) {
+    this.http.get<any>('http://localhost:8080/api/getFav', {headers: this.headers}).subscribe(
       (data) => {
-        var json = data.json();
-        for (let j of json) {
-          this.Favorites.push(new Book(j.bookid, j.bookname, j.bookauthor, j.bookyear));
-        }
+        this.Favorites = data;
       },
       error => {
         console.error(error);

@@ -5,6 +5,7 @@ import com.example.apphandling.controller.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import com.example.apphandling.controller.repository.BookRepository;
 import com.example.apphandling.controller.repository.UserRepository;
@@ -34,41 +35,46 @@ public class RestController {
     }
 
     @GetMapping("/getFav")
-    public List<BookModel> getFavorites() {
-        UserModel userModel = (UserModel) httpSession.getAttribute("currentUser");
-        List<BookModel> bookList = new ArrayList<>(userRepository.findByusername
-                (userModel.getUserName()).getBooks());
-        return bookList;
+    public void getFavorites() {
+        System.out.println(this.httpSession.getAttribute("currentUser"));
+        UserModel userModel = (UserModel) this.httpSession.getAttribute("currentUser");
+       // System.out.println(userModel.getUserName());
+       // List<BookModel> bookList = new ArrayList<>(this.userRepository.findByuserNameAndPassword
+      //          (userModel.getUserName(), userModel.getPassword()).getBooks());
+      //  System.out.println(bookList);
+       // return bookList;
     }
 
     @PostMapping("/addtoFav")
     public void addtoFavorites(@RequestBody BookModel bookModel) {
         UserModel currentUser = (UserModel) httpSession.getAttribute("currentUser");
-        UserModel userModel = userRepository.findByusername(currentUser.getUserName());
-        Set<BookModel> Books = userModel.getBooks();
-        Books.add(bookModel);
+        UserModel userModel = userRepository.findByuserNameAndPassword
+                (currentUser.getUserName(), currentUser.getPassword());
+         userModel.getBooks().add(bookModel);
     }
 
     @PostMapping("/removeFav")
     public void removefromFavorites(@RequestBody BookModel bookModel) {
         UserModel currentUser = (UserModel) httpSession.getAttribute("currentUser");
-        UserModel userModel = userRepository.findByusername(currentUser.getUserName());
-        Set<BookModel> Books = userModel.getBooks();
-        Books.remove(bookModel);
+        UserModel userModel = userRepository.findByuserNameAndPassword
+                (currentUser.getUserName(), currentUser.getPassword());
+        userModel.getBooks().remove(bookModel);
     }
 
     @PostMapping("/onAdd")
     public Boolean isBookinFavorites(@RequestBody BookModel bookModel) {
         UserModel currentUser = (UserModel) httpSession.getAttribute("currentUser");
-        UserModel userModel = userRepository.findByusername(currentUser.getUserName());
+        UserModel userModel = userRepository.findByuserNameAndPassword
+                (currentUser.getUserName(), currentUser.getPassword());
         Set<BookModel> Books = userModel.getBooks();
         if (Books.contains(bookModel)) {
             return true;
         }
         return false;
     }
+
     @PostMapping("/onLogout")
-    public void logout(){
+    public void logout() {
         this.httpSession.removeAttribute("currentUser");
     }
 }

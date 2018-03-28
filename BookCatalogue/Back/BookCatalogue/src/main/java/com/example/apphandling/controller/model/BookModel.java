@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "books", schema = "book_database")
+@Table(name = "book", schema = "book_database")
 public class BookModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

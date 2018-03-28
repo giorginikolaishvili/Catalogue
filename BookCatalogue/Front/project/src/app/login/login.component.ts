@@ -24,11 +24,9 @@ export class LoginComponent implements OnInit {
     var jsonstr = {'userName': this.userName, 'password': this.password};
     this.http.post('http://localhost:8080/api/postUser', jsonstr).subscribe(
       (data) => {
-        if ((data != null)) {
-          this.router.navigate(['/loggedIn']);
-        }
-        window.alert(this.res);
-      },
+        if (data != null)
+          this.router.navigate([('/loggedIn')]);
+          },
       error => {
         console.error(error);
       }

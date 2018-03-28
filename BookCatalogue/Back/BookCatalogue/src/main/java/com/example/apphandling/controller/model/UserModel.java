@@ -18,10 +18,18 @@ public class UserModel {
     private int userid;
     @Column(name = "user_name")
     private String name;
+    @Column(name = "user_lastname")
+    private String lastName;
     @Column(name = "user_username")
     private String userName;
     @Column(name = "user_password")
     private String password;
+    @ManyToMany
+    @JoinTable(
+            name = "user_book",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
 
     private Set<BookModel> Books;
 
@@ -37,6 +45,30 @@ public class UserModel {
         this.userName = userName;
     }
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -49,11 +81,5 @@ public class UserModel {
         this.Books = books;
     }
 
-    public UserModel(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
 
-    public UserModel() {
-    }
 }
